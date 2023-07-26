@@ -65,6 +65,8 @@ export class AppService {
               const page = await browser.newPage();
               await page.setViewport({ width: 1280, height: 720 });
               await page.goto(link);
+              const pageTitle = await page.evaluate(() => document.title);
+              console.log('Page Title:', pageTitle);
               await page.waitForTimeout(10000);
 
               const followersCount = await page.$x('//span[@class="_ac2a"]/@title');
