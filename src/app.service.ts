@@ -44,7 +44,10 @@ export class AppService {
           const endIndex = Math.min(startIndex + chunkSize, totalRows);
           const chunkRows = rows.slice(startIndex, endIndex);
 
-          const browser = await puppeteer.launch({ headless: false });
+          const browser = await puppeteer.launch({ 
+            headless: false,
+            executablePath: '/usr/bin/chromium-browser'
+          });
 
           const promises = chunkRows.map(async (row) => {
             const link = row.instalink;
