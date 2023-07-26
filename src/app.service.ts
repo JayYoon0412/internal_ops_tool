@@ -81,6 +81,7 @@ export class AppService {
 
               await csvWriter.writeRecords([{ name, storeId, link, followerContent }]);
             } catch (error) {
+              console.log(error)
               // 경우 2: 잘못된 인스타그램 링크일 경우
               console.log('WARNING: invalid link');
               let followerContent = 'wrong link'
