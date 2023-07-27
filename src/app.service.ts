@@ -45,10 +45,10 @@ export class AppService {
           const chunkRows = rows.slice(startIndex, endIndex);
 
           const browser = await puppeteer.launch({ 
-            headless: true,
-            executablePath: '/usr/bin/chromium-browser',
-            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+            headless: true
           });
+
+          
 
           const promises = chunkRows.map(async (row) => {
             const link = row.instalink;
@@ -63,6 +63,14 @@ export class AppService {
             }
 
             try {
+
+              const loginPage = await browser.newPage();
+              await loginPage.goto(link);
+              await loginPage.waitForSelector('input[name="username"]');
+              await loginPage.type('input[name="username"]', 'zigzagmate_help');
+              await loginPage.type('input[name="password"]', 'zigzagmate2023');
+              await loginPage.click('button[type="submit"]');
+
               const page = await browser.newPage();
               await page.setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
               await page.setViewport({ width: 1280, height: 720 });
