@@ -67,15 +67,22 @@ export class AppService {
 
               const loginPage = await browser.newPage();
               await loginPage.goto(link);
-              await loginPage.waitForSelector('input[name="username"]');
-              await loginPage.type('input[name="username"]', 'zigzagmate_help');
-              await loginPage.type('input[name="password"]', 'zigzagmate2023');
-              await loginPage.click('button[type="submit"]');
+              
+              
 
               const page = await browser.newPage();
               await page.setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
               await page.setViewport({ width: 1280, height: 720 });
               await page.goto(link);
+              await page.waitForSelector('input[name="username"]');
+
+              await page.type('input[name="username"]', 'zigzagmate_help');
+              await page.type('input[name="password"]', 'zigzagmate2023');
+              await page.click('button[type="submit"]');
+
+              await page.goto(link)
+
+
               const pageTitle = await page.evaluate(() => document.title);
               console.log('Page Title:', pageTitle);
               await page.waitForTimeout(10000);
