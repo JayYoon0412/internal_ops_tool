@@ -49,8 +49,6 @@ export class AppService {
             executablePath: '/usr/bin/chromium-browser'
           });
 
-          
-
           const promises = chunkRows.map(async (row) => {
             const link = row.instalink;
             const name = "\ufeff"+row.store_name;
@@ -67,13 +65,15 @@ export class AppService {
 
               const loginPage = await browser.newPage();
               await loginPage.goto(link);
-              
-              
 
               const page = await browser.newPage();
               await page.setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
               await page.setViewport({ width: 1280, height: 720 });
               await page.goto(link);
+
+              console.log(link)
+              const title = await page.evaluate(() => document.title);
+              console.log('Page Title:', title);
 
               await page.waitForSelector('//input[@class="_aa4b _add6 _ac4d"]');
 
