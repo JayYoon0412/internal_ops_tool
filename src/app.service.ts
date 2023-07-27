@@ -45,7 +45,8 @@ export class AppService {
           const chunkRows = rows.slice(startIndex, endIndex);
 
           const browser = await puppeteer.launch({ 
-            headless: true
+            headless: true,
+            executablePath: '/usr/bin/chromium-browser'
           });
 
           
