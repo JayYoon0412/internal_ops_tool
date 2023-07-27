@@ -74,15 +74,17 @@ export class AppService {
               await page.setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
               await page.setViewport({ width: 1280, height: 720 });
               await page.goto(link);
-              await page.waitForSelector('#loginForm > div > div:nth-child(1) > div > label > input');
+
+              await page.waitForSelector('//span[@class="_aa48"]');
 
               await page.type('#loginForm > div > div:nth-child(1) > div > label > input', 'zigzagmate_help');
               await page.type('#loginForm > div > div:nth-child(2) > div > label > input', 'zigzagmate2023');
               await page.click('#loginForm > div > div:nth-child(3) > button');
 
-              await page.goto(link)
+              await page.goto(link);
 
 
+              console.log(link)
               const pageTitle = await page.evaluate(() => document.title);
               console.log('Page Title:', pageTitle);
               await page.waitForTimeout(10000);
