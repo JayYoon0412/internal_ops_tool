@@ -75,7 +75,7 @@ export class AppService {
               await page.setViewport({ width: 1280, height: 720 });
               await page.goto(link);
 
-              await page.waitForTimeout(4500);
+              await page.waitForSelector('//input[@class="_aa4b _add6 _ac4d"]');
 
               await page.type('#loginForm > div > div:nth-child(1) > div > label > input', 'zigzagmate_help');
               await page.type('#loginForm > div > div:nth-child(2) > div > label > input', 'zigzagmate2023');
