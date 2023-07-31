@@ -75,18 +75,18 @@ export class AppService {
               const title = await page.evaluate(() => document.title);
               console.log('Page Title:', title);
 
-              await page.waitForSelector('//input[@class="_aa4b _add6 _ac4d"]');
+              // await page.waitForSelector('//input[@class="_aa4b _add6 _ac4d"]');
 
-              await page.type('#loginForm > div > div:nth-child(1) > div > label > input', 'zigzagmate_help');
-              await page.type('#loginForm > div > div:nth-child(2) > div > label > input', 'zigzagmate2023');
-              await page.click('#loginForm > div > div:nth-child(3) > button');
+              // await page.type('#loginForm > div > div:nth-child(1) > div > label > input', 'zigzagmate_help');
+              // await page.type('#loginForm > div > div:nth-child(2) > div > label > input', 'zigzagmate2023');
+              // await page.click('#loginForm > div > div:nth-child(3) > button');
 
-              await page.goto(link);
+              // await page.goto(link);
 
 
-              console.log(link)
-              const pageTitle = await page.evaluate(() => document.title);
-              console.log('Page Title:', pageTitle);
+              // console.log(link)
+              // const pageTitle = await page.evaluate(() => document.title);
+              // console.log('Page Title:', pageTitle);
               await page.waitForTimeout(10000);
 
               const followersCount = await page.$x('//span[@class="_ac2a"]/@title');
