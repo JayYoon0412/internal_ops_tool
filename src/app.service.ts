@@ -71,23 +71,18 @@ export class AppService {
               await page.setViewport({ width: 1280, height: 720 });
               await page.goto(link);
 
-              console.log(link)
-              await page.waitForTimeout(10000);
               const title = await page.evaluate(() => document.title);
               console.log('Page Title:', title);
 
-              // await page.waitForSelector('//input[@class="_aa4b _add6 _ac4d"]');
+              if (title=="Login • Instagram") {
+                await page.waitForSelector('//input[@class="_aa4b _add6 _ac4d"]');
 
-              // await page.type('#loginForm > div > div:nth-child(1) > div > label > input', 'zigzagmate_help');
-              // await page.type('#loginForm > div > div:nth-child(2) > div > label > input', 'zigzagmate2023');
-              // await page.click('#loginForm > div > div:nth-child(3) > button');
-
-              // await page.goto(link);
-
-
-              // console.log(link)
-              // const pageTitle = await page.evaluate(() => document.title);
-              // console.log('Page Title:', pageTitle);
+                await page.type('#loginForm > div > div:nth-child(1) > div > label > input', 'zigzagmate_help');
+                await page.type('#loginForm > div > div:nth-child(2) > div > label > input', 'zigzagmate2023');
+                await page.click('#loginForm > div > div:nth-child(3) > button');
+  
+                await page.goto(link);
+              }
               await page.waitForTimeout(10000);
 
               const followersCount = await page.$x('//span[@class="_ac2a"]/@title');
@@ -131,6 +126,23 @@ export class AppService {
       'Content-Disposition': 'attachment; filename=followers_data.csv',
     });
     fileReadStream.pipe(response);
+  }
+
+  async test() {
+    const browser = await puppeteer.launch({ 
+      headless: true,
+      executablePath: '/usr/bin/chromium-browser'
+    });
+    const page = await browser.newPage();
+    await page.setViewport({ width: 1280, height: 720 });
+    await page.goto('https://www.instagram.com/accounts/login/');
+    await page.waitForSelector('#loginForm > div > div:nth-child(1) > div > label > input');
+    await page.type('#loginForm > div > div:nth-child(1) > div > label > input', 'zigzagmate_help');
+    await page.type('#loginForm > div > div:nth-child(2) > div > label > input', 'zigzagmate2023');
+    await page.click('#loginForm > div > div:nth-child(3) > button');
+    await page.waitForTimeout(10000);
+
+    await browser.close();
   }
 }
 

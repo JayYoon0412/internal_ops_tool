@@ -26,4 +26,9 @@ export class AppController {
     await this.appService.downloadCsvFile(res);
     return { message: 'Download Complete!' };
   }
+
+  @Get('test')
+  async loginTest() {
+    return await this.appService.test();
+  }
 }
