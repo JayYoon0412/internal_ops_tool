@@ -72,6 +72,7 @@ export class AppService {
               await page.goto(link);
 
               console.log(link)
+              await page.waitForTimeout(3000);
               const title = await page.evaluate(() => document.title);
               console.log('Page Title:', title);
 
