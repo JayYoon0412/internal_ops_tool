@@ -1,2 +1,4 @@
 /dist
 /node_modules
+/google_spread_key.json
+/.env

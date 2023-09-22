@@ -1,13 +1,388 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Upload Page</title>
-  </head>
-  <body>
-    <h1>Upload CSV File</h1>
-    <form action="/upload" method="post" enctype="multipart/form-data">
-      <input type="file" name="file" accept=".csv" />
-      <button type="submit">Upload</button>
-    </form>
-  </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대시보드</title>
+    <link rel="icon" href="" type="image/x-icon">
+    {{!-- <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script> --}}
+    {{!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css"> --}}
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 350;
+        }
+
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-top: 50px;
+        }
+
+        .navigation {
+            flex: 1;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-right: 1px solid #ddd;
+        }
+
+        .main-content {
+            flex: 3;
+            padding: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            margin-bottom: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        #graphqlButton {
+          width: 200px;
+          margin-bottom: 20px;
+          text-align: center;
+          font-size: 15px;
+        }
+
+        #cancelAllButton {
+          width: 200px;
+          margin-bottom: 20px;
+          text-align: center;
+          font-size: 15px;
+        }
+
+        #requestDelivery {
+          width: 200px;
+          margin-bottom: 20px;
+          text-align: center;
+          font-size: 15px;
+        }
+
+        #sheetsButton {
+          width: 200px;
+          margin-bottom: 20px;
+          text-align: center;
+          font-size: 15px;
+          background-color: #00d4b1;
+        }
+
+        #redashButton {
+          width: 200px;
+          margin-bottom: 20px;
+          text-align: center;
+          font-size: 15px;
+          background-color: #9E9E9E;
+        }
+
+        h2 {
+          margin-bottom: 30px;
+          font-weight: 300;
+        }
+
+        .small-box {
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 50px;
+            margin-left: -20px;
+            margin-right: 50px;
+            height: 450px;
+
+        }
+
+        .container-box {
+          display: flex;
+          flex-direction: row;
+        }
+
+    .input-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .input-container label {
+        flex: 1;
+        margin-right: 10px;
+        text-align: left;
+    }
+
+    .input-container input {
+        flex: 1;
+        text-align: right;
+    }
+
+    #updateCountsButton {
+      margin-top: 50px;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+  
+    <div class="navbar">
+        <a target="_blank" href="https://www.dealibird.com/pps/seller_issues/purchase_issues">딜리버드 파트너센터</a>
+        <a target="_blank" href="https://partners.kakaostyle.com/shop/cq-m2lp61rw/catalog/item_list">카카오스타일 파트너센터</a>
+        <a target="_blank" href="https://cs.zigzag.kr/">카카오스타일 CS센터</a>
+        <a target="_blank" href="https://backoffice.zigzag.kr/">카카오스타일 백오피스</a>
+    </div>
+    <div class="container-box">
+
+      <div class="container">
+        <div class="navigation">
+            <h2>운영 작업패널</h2>
+            <a href="https://dealibird.com/pps/seller_issues/purchase_issues" target="_blank" class="button" id="graphqlButton">입고 확인</a>
+            <a href="https://docs.google.com/spreadsheets/d/1yhuDkHz01LNLy3GUKDkkKSRPLbcKsohKTzEOLiMRWiw/edit#gid=1106539959" target="_blank" class="button" id="graphqlButton">반품 관리</a>
+            <a href="https://partners.kakaostyle.com/shop/cq-m2lp61rw/order_item/list/cancel" target="_blank" class="button" id="graphqlButton">취소 요청</a>
+            <a class="button" id="requestDelivery">출고 요청</a>
+            <a href="https://docs.google.com/spreadsheets/d/1yhuDkHz01LNLy3GUKDkkKSRPLbcKsohKTzEOLiMRWiw/edit#gid=550784532" target="_blank" class="button" id="graphqlButton">품절 관리</a>
+            <a class="button" id="cancelAllButton">전체 취소</a>
+            <form id="cancelAllForm" action="/upload" method="post" enctype="multipart/form-data" style="display: none;">
+                <input type="file" name="file" accept=".xlsx" />
+                <button type="submit" id="submitCancel">Submit</button>
+            </form>
+
+            <h2>입점 현황</h2>
+            <a href="https://docs.google.com/spreadsheets/d/1tS28m18rIWO_2JEE6r0aPI8hfzJXSam44yp4_ZHedTQ/edit#gid=524674474" target="_blank" class="button" id="sheetsButton">지표 트랙킹 시트</a>
+            <h2>리대시</h2>
+            <a href="https://redash.kakaostyle.in/queries/5768?p_%EB%94%9C%EB%A6%AC%EB%B2%84%EB%93%9CID%20%28%EB%B3%B5%EC%88%98%20%EA%B2%80%EC%83%89%20%EA%B0%80%EB%8A%A5%29=%20&p_%EB%94%9C%EB%A6%AC%EB%B2%84%EB%93%9C%EC%83%81%ED%92%88ID%20%5B%EC%97%AC%EB%9F%AC%EA%B0%9C%EC%9D%BC%20%EA%B2%BD%EC%9A%B0%20%EC%BD%A4%EB%A7%88%28%2C%29%20%EB%98%90%EB%8A%94%20%EA%B3%B5%EB%B0%B1%28%20%29%EC%9C%BC%EB%A1%9C%20%EC%97%B0%EA%B2%B0%5D=1000759648%201000798273%201000906265%201000917674%201000984445%201001041162%201001051511%201001060141%201001066691%201001066692&p_%EC%A7%80%EA%B7%B8%EC%9E%AC%EA%B7%B8ID=%EC%A0%84%EC%B2%B4" target="_blank" class="button" id="redashButton">상품번호 검색</a>
+        </div>
+        <div class="main-content">
+            <canvas id="barChart"></canvas>
+            <canvas id="lineChart"></canvas>
+            
+
+            <section id="usefulLinks" style="margin-top: 50px;">
+                <h2>참고 링크</h2>
+                <a href="https://www.notion.so/croquis/_-1-cd5deda6ac204492ab87b4627217820f" target="_blank">🔍 입고 확인 메뉴얼</a>
+                <a href="https://www.notion.so/croquis/_-3-b74d8e77a9024dfb93361ab71b847752" target="_blank">♽ 반품 업데이트 메뉴얼</a>
+                <a href="https://www.notion.so/croquis/_-2-208528e3307b42869a493eb3e09f8cc4" target="_blank">❎ 유저 취소 메뉴얼</a>
+                <a href="https://www.notion.so/croquis/_-4-b213ba3efe8847338dc2ba0d8921b641" target="_blank">📦 출고 요청 메뉴얼</a>
+                <a href="https://www.notion.so/croquis/_-5-8a7de32c1a6844e8a3ccbe339a0530c8" target="_blank">🪫 품절 관리 메뉴얼</a>
+
+            </section>
+        </div>
+      </div>
+
+      <div class="small-box">
+            <h2>오늘자 지표 입력</h2>
+            <p>[<span id="todaysDate"></span>]</p>
+            <div class="input-container">
+                <label for="newSellerCount">신규 입점 판매자 수:</label>
+                <input type="number" id="newSellerCount" min="0">
+            </div>
+            <div class="input-container">
+                <label for="returnCount">입고 확인 건수:</label>
+                <input type="number" id="checkCount" min="0">
+            </div>
+            <div class="input-container">
+                <label for="returnCount">반품 처리 건수:</label>
+                <input type="number" id="returnCount" min="0">
+            </div>
+            <div class="input-container">
+                <label for="returnCount">품절 상품 수:</label>
+                <input type="number" id="oosCount" min="0">
+            </div>
+            <div class="input-container">
+                <label for="returnCount">부분 출고 건수:</label>
+                <input type="number" id="partialOBCount" min="0">
+            </div>
+            <div class="input-container">
+                <label for="returnCount">전체 출고 건수:</label>
+                <input type="number" id="totalOBCount" min="0">
+            </div>
+            <div class="input-container">
+                <label for="returnCount">변심 취소 건수:</label>
+                <input type="number" id="userCancelCount" min="0">
+            </div>
+            <div class="input-container">
+                <label for="orderWithdrawalCount">주문 품절 취소 건수:</label>
+                <input type="number" id="oosCancelCount" min="0">
+            </div>
+            <button id="updateCountsButton" class="button">업데이트</button>
+        </div>
+    </div>
+  
+    <script>
+
+      const today = new Date();
+      const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+      const formattedDate = today.toLocaleDateString('en-US', options);
+      document.getElementById('todaysDate').textContent = formattedDate;
+
+      document.getElementById("requestDelivery").addEventListener("click", async () => {
+        try {
+          const response = await fetch('/requestDelivery', {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          });
+        } catch (error) {
+          console.error(error);
+        } 
+        });
+        
+      document.addEventListener("DOMContentLoaded", () => {
+
+        document.getElementById("updateCountsButton").addEventListener("click", async () => {
+          const newSellerCount = parseInt(document.getElementById("newSellerCount").value);
+          const checkCount = parseInt(document.getElementById("checkCount").value)
+          const returnCount = parseInt(document.getElementById("returnCount").value);
+          const oosCount = parseInt(document.getElementById("oosCount").value);
+          const partialOBCount = parseInt(document.getElementById("partialOBCount").value);
+          const totalOBCount = parseInt(document.getElementById("totalOBCount").value);
+          const userCancelCount = parseInt(document.getElementById("userCancelCount").value);
+          const oosCancelCount = parseInt(document.getElementById("oosCancelCount").value);
+          const dateTime = new Date();
+          const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+          const formattedDate = today.toLocaleDateString('en-US', options);
+          const dateStr = formattedDate.toString();
+
+          await fetch('/updateSheet', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              sellerCount: newSellerCount,
+              checkCount,
+              returnCount,
+              oosCount,
+              partialOBCount,
+              totalOBCount,
+              userCancelCount,
+              oosCancelCount,
+              dateString: dateStr
+            })
+          })
+
+          document.getElementById("newSellerCount").value = '';
+          document.getElementById("checkCount").value = ''
+          document.getElementById("returnCount").value = ''
+          document.getElementById("oosCount").value = ''
+          document.getElementById("partialOBCount").value = ''
+          document.getElementById("totalOBCount").value = ''
+          document.getElementById("userCancelCount").value = ''
+          document.getElementById("oosCancelCount").value = ''
+
+        })
+        
+        const barChartData = {
+          //TODO: A열 최근 N개 가져오기
+            labels: ["8/21", "8/22", "8/23", "8/24", "8/25", "8/26"],
+            datasets: [{
+                label: "일별 출고요청 건수",
+                backgroundColor: "rgba(75, 192, 192, 0.2)",
+                borderColor: "rgba(75, 192, 192, 1)",
+                borderWidth: 1,
+                //TODO: 해당 열들의 값으로 가져오기
+                data: [65, 59, 80, 81, 56, 55],
+            }],
+        };
+
+        const lineChartData = {
+          //TODO: A열 최근 N개 가져오기
+            labels: ["8/21", "8/22", "8/23", "8/24", "8/25", "8/26"],
+            datasets: [{
+                label: "일별 취소요청 건수",
+                borderColor: "rgba(255, 99, 132, 1)",
+                borderWidth: 2,
+                fill: false,
+                //TODO: 해당 열들의 값으로 가져오기
+                data: [100, 120, 150, 130, 160],
+            }],
+        };
+
+        const barCanvas = document.getElementById("barChart").getContext("2d");
+        const lineCanvas = document.getElementById("lineChart").getContext("2d");
+
+        new Chart(barCanvas, {
+            type: "bar",
+            data: barChartData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        });
+
+        new Chart(lineCanvas, {
+            type: "line",
+            data: lineChartData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        });
+
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const cancelAllButton = document.getElementById('cancelAllButton');
+        const cancelAllForm = document.getElementById('cancelAllForm');
+
+        cancelAllButton.addEventListener('click', function () {
+            cancelAllForm.style.display = 'block';
+        });
+    });
+
+   
+
+</script>
+
+</body>
 </html>

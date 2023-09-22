@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 250px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+
+        h2 {
+            color: #4285f4;
+        }
+
+        .input-container {
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box; /* Prevents padding and border from increasing the element's width */
+        }
+
+        input[type="submit"] {
+            background-color: #4285f4;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #357ae8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Admin Login</h2>
+        <form action="#" method="post">
+            <div class="input-container">
+                <label for="email"></label>
+                <input type="text" id="email" name="email" placeholder="Email">
+            </div>
+            <div class="input-container">
+                <label for="password"></label>
+                <input type="password" id="password" name="password" placeholder="Password">
+            </div>
+            <input type="submit" value="Login" style="display: flex; margin-left: auto;">
+        </form>
+    </div>
+</body>
+</html>

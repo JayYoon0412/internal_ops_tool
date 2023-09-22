@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <title>Seller Contacts Page</title>
+  </head>
+  <body>
+
+    <form
+      action='/redash/sellercontact'
+      method='post'
+      enctype='multipart/form-data'
+    >
+      <!-- Hide the default file input element -->
+      <input
+        type='file'
+        name='file'
+        id='fileInput'
+        accept='.csv'
+        style='display: none;'
+      />
+
+      <!-- Create a label that acts as the upload icon -->
+      <label for='fileInput' class='upload-icon'>
+        <svg
+          width='40'
+          height='40'
+          xmlns='http://www.w3.org/2000/svg'
+          viewBox='0 0 24 24'
+        >
+          <!-- Add your custom upload icon SVG here -->
+          <path d='M0 0h24v24H0z' fill='none' />
+          <path
+            d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'
+          />
+        </svg>
+      </label>
+
+      <button type='submit'>Upload</button>
+    </form>
+
+    <style>
+      /* Style the upload icon label */ .upload-icon { display: inline-block;
+      width: 40px; height: 40px; background-color: #eee; border-radius: 50%;
+      cursor: pointer; padding: 5px; text-align: center; } /* Style the upload
+      icon SVG (customize as needed) */ .upload-icon svg { fill: #333; /* Icon
+      color */ }
+    </style>
+
+  </body>
+</html>

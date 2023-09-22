@@ -1,0 +1,15 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Query {
+  fetchSellerInformation(ids: [String!]!): String!
+  loadDocs: String!
+}
+
+type Mutation {
+  requestDomesticDelivery: String!
+  fetchMatchingID(ids: [String!]!): String!
+  cancelOOS(ids: [String!]!): String!
+  cancelCBU(ids: [String!]!): String!
+}
