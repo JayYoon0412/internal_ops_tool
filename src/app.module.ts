@@ -31,7 +31,7 @@ import { DashboardTransport } from './apis/log/log.transport';
     }),
     SlackModule.forRoot({
       type: 'webhook',
-      url: 'https://hooks.slack.com/services/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',
+      url: process.env.WEBHOOK_LINK
     }),
     WinstonModule.forRoot({
       transports: [

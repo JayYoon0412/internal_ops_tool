@@ -153,7 +153,13 @@ export class DeliveryService {
     await browser.close();
     const timestamp = Math.floor(Date.now()/1000);
     const message = format(process.env.MESSAGE_CONTENT_DELIVERY_SUCCESS, timestamp);
-    await this.notifyAlertSlack({ message });
+
+    try {
+      await this.notifyAlertSlack({ message });
+    } catch(error) {
+      console.log(error);
+    }
+    
 
     return process.env.DELIVERY_SUCCESS;
   }
@@ -261,7 +267,12 @@ export class DeliveryService {
 
     const timestamp = Math.floor(Date.now()/1000);
     const message = format(process.env.MESSAGE_CONTENT_ID_MAPPING_SUCCESS, timestamp);
-    await this.notifyAlertSlack({ message });
+    try {
+      await this.notifyAlertSlack({ message });
+    } catch(error) {
+      console.log(error);
+    }
+    
     return JSON.stringify(idSet);
   }
 
@@ -390,7 +401,12 @@ export class DeliveryService {
     const timestamp = Math.floor(Date.now()/1000);
     const message = format(process.env.MESSAGE_CONTENT_CANCEL_SUCCESS, timestamp)
     
-    await this.notifyAlertSlack({ message });
+    try {
+      await this.notifyAlertSlack({ message });
+    } catch(error) {
+      console.log(error);
+    }
+    
     return JSON.stringify(multiIds);
   }
 
