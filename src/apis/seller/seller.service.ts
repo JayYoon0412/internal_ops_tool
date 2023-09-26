@@ -3,6 +3,7 @@ import puppeteer from 'puppeteer';
 import 'dotenv/config';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
+import { format } from 'util';
 
 export interface SampleSeller {
   id: string;
@@ -22,10 +23,9 @@ export class SellerService {
   async scrapeContacts({ ids }) {
     const browser = await puppeteer.launch({
       headless: false,
-      executablePath:
-        '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+      executablePath: process.env.PATH_CHROME
     });
-    this.logger.info('셀러 정보 기입 시작', SellerService.name)
+    this.logger.info(process.env.LOG_SELLER_SCRAPE_START, SellerService.name)
     const page = await browser.newPage();
     await page.setViewport({ width: 1280, height: 720 });
     await page.goto(process.env.LINK_SELLERS_CONTACT);
@@ -46,11 +46,11 @@ export class SellerService {
     //2차 인증 문자 자동수신
     await page.waitForSelector(process.env.ELEMENT_GOOGLE_AUTH_BUTTON);
     await page.click(process.env.ELEMENT_GOOGLE_AUTH_BUTTON);
-    this.logger.info('2차 인증 진행', SellerService.name);
+    this.logger.info(process.env.LOG_AUTH_START, SellerService.name);
 
     await page.waitForTimeout(11000);
     await page.click(process.env.ELEMENT_GOOGLE_AUTH_BUTTON);
-    this.logger.info('CS 센터 로그인 성공', SellerService.name);
+    this.logger.info(process.env.LOG_ACCESS_CS, SellerService.name);
 
     let sellerList: SampleSeller[] = [];
 
@@ -93,13 +93,13 @@ export class SellerService {
         console.log(error);
       }
       sellerList.push(seller);
-      this.logger.info(`셀러 ID ${ids[i]} - 연락처, 카테고리 정보 찾음`)
+      this.logger.info(format(process.env.LOG_PROGRESS_SELLERS, ids[i]))
     }
 
     await page.goto(process.env.LINK_SELLER_DOMAIN_LOGIN);
     //TODO: 테스팅 필요
-    await page.waitForSelector('#app > div > div.css-1aoctg4-MetaContainer.e1iz2y4f2 > main > form > div > div:nth-child(2) > div:nth-child(1) > input');
-    await page.type('#app > div > div.css-1aoctg4-MetaContainer.e1iz2y4f2 > main > form > div > div:nth-child(2) > div:nth-child(1) > input', 'kakaostyle.com');
+    await page.waitForSelector(process.env.ELEMENT_PCENTER_LOGIN);
+    await page.type(process.env.ELEMENT_PCENTER_LOGIN, process.env.ADMIN_EMAIL);
 
     for (let i = 0; i < sellerList.length; i++) {
       let seller: SampleSeller = sellerList[i];
@@ -114,7 +114,7 @@ export class SellerService {
         element,
       );
       seller.domainID = hrefValue.slice(1, -1);
-      this.logger.info(`셀러 ID ${seller.id} - 도메인 아이디 정보 찾음`)
+      this.logger.info(format(process.env.LOG_PROGRESS_SELLER_DOMAIN, seller.id))
       await page.goto(process.env.LINK_SELLER_DOMAIN_HOME);
 
       console.log(seller);

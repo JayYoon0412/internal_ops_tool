@@ -276,11 +276,6 @@ export class DeliveryService {
     return JSON.stringify(idSet);
   }
 
-  async notifyAlertSlack({ message }) {
-    this.slackService.sendText(message);
-    this.logger.info(process.env.LOG_NOTIFICATION_SUCCESS, DeliveryService.name);
-  }
-
   async cancelOrder({ ids, reasonID }) {
     const browser = await puppeteer.launch({
       headless: false,
@@ -435,5 +430,10 @@ export class DeliveryService {
         DeliveryService.name,
       );
     }
+  }
+
+  async notifyAlertSlack({ message }) {
+    this.slackService.sendText(message);
+    this.logger.info(process.env.LOG_NOTIFICATION_SUCCESS, DeliveryService.name);
   }
 }
