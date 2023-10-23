@@ -68,7 +68,6 @@ export class DeliveryService {
 
     const browser = await puppeteer.launch({
       headless: false,
-      executablePath: process.env.PATH_CHROME
     });
     const page = await this.processLogin({ browser });
 
@@ -196,7 +195,6 @@ export class DeliveryService {
   async convertID({ ids }) {
     const browser = await puppeteer.launch({
       headless: false,
-      executablePath: process.env.PATH_CHROME
     });
 
     const page = await this.processLogin({ browser });
@@ -278,8 +276,7 @@ export class DeliveryService {
 
   async cancelOrder({ ids, reasonID }) {
     const browser = await puppeteer.launch({
-      headless: false,
-      executablePath: process.env.PATH_CHROME
+      headless: false
     });
 
     const page = await this.processLogin({ browser });
