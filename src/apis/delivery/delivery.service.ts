@@ -232,6 +232,7 @@ export class DeliveryService {
           (rows) => {
             const ids = [];
             if (rows) {
+              console.log(rows)
               rows.forEach((row) => {
                 const rowClass = row.getAttribute('class');
                 if (rowClass === 'odd' || rowClass === 'even') {

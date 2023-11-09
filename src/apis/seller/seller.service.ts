@@ -23,36 +23,19 @@ export class SellerService {
   async scrapeContacts({ ids }) {
     const browser = await puppeteer.launch({
       headless: false,
-      executablePath: process.env.PATH_CHROME,
-      userDataDir: `/Users/jay.0412/Library/'Application Support'/Google/Chrome/Default`
     });
     this.logger.info(process.env.LOG_SELLER_SCRAPE_START, SellerService.name)
     const page = await browser.newPage();
     await page.setViewport({ width: 1280, height: 720 });
     await page.goto(process.env.LINK_SELLERS_CONTACT);
 
-    // await page.waitForTimeout(4000);
-    // await page.click(process.env.ELEMENT_SIGNIN);
-    // await page.waitForSelector(process.env.ELEMENT_IDENTIFIER_INPUT);
-    // await page.type(
-    //   process.env.ELEMENT_IDENTIFIER_INPUT,
-    //   process.env.ADMIN_EMAIL,
-    // );
-    // await page.click(process.env.ELEMENT_IDENTIFIER_TAG);
+    await page.waitForSelector(process.env.ELEMENT_IDENTIFIER_INPUT);
+    await page.type(
+      process.env.ELEMENT_IDENTIFIER_INPUT,
+      process.env.ADMIN_EMAIL,
+    );
 
-    // await page.waitForSelector(process.env.ELEMENT_IDENTIFIER_INPUT);
-    // await page.waitForTimeout(7000);
-    // await page.click(process.env.ELEMENT_PASS_NEXT);
-
-    // //2차 인증 문자 자동수신
-    // await page.waitForSelector(process.env.ELEMENT_GOOGLE_AUTH_BUTTON);
-    // await page.click(process.env.ELEMENT_GOOGLE_AUTH_BUTTON);
-    // this.logger.info(process.env.LOG_AUTH_START, SellerService.name);
-
-    // await page.waitForTimeout(11000);
-    // await page.click(process.env.ELEMENT_GOOGLE_AUTH_BUTTON);
-    // this.logger.info(process.env.LOG_ACCESS_CS, SellerService.name);
-
+    await page.waitForTimeout(20000);
     let sellerList: SampleSeller[] = [];
 
     for (let i = 0; i < ids.length; i++) {
@@ -63,6 +46,7 @@ export class SellerService {
         email: '',
         domainID: '',
       };
+      await page.waitForSelector('#app > section > section > aside > div > ul > li:nth-child(1) > div > span.ant-menu-title-content');
       await page.goto(process.env.LINK_SELLERS_LIST + ids[i]);
       await page.waitForTimeout(500);
 
