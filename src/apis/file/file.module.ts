@@ -5,9 +5,9 @@ import { SlackModule, SlackService } from "nestjs-slack";
 
 @Module({
     imports: [SlackModule.forRoot({
-        type: "webhook",
-        url: process.env.WEBHOOK_LINK
-      }),],
+      type: 'webhook',
+      url: process.env.WEBHOOK_LINK_2
+    }),],
     providers: [FileService, FileResolver, SlackService]
 })
 export class FileModule {}

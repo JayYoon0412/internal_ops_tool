@@ -32,7 +32,7 @@ import * as schedule from 'node-schedule';
     }),
     SlackModule.forRoot({
       type: 'webhook',
-      url: process.env.WEBHOOK_LINK
+      url: process.env.WEBHOOK_LINK_2
     }),
     WinstonModule.forRoot({
       transports: [

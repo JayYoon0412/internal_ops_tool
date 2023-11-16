@@ -7,8 +7,8 @@ import { SlackModule, SlackService } from 'nestjs-slack';
   imports: [
     SlackModule.forRoot({
       type: 'webhook',
-      url: process.env.WEBHOOK_LINK
-    }),
+      url: process.env.WEBHOOK_LINK_2
+    })
   ],
   providers: [DeliveryResolver, DeliveryService, SlackService],
 })
